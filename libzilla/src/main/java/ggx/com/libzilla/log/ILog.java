@@ -6,6 +6,6 @@ package ggx.com.libzilla.log;
 
 public interface ILog {
 
-    void print(String str);
-    void print(String str,Throwable tr);
+    void print(String x);
+    void print(String x,Throwable tr);
 }

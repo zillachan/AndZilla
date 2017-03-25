@@ -1,31 +1,25 @@
-package com.zilla.andzilla;
+package com.zilla.andzilla.log;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.zilla.andzilla.log.LogActivity;
+import com.zilla.andzilla.R;
 
 import ggx.com.libzilla.log.AppLog;
 
-public class MainActivity extends AppCompatActivity {
+
+public class LogActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_log);
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                AppLog.print("测试普通日志"+new Object());
-                AppLog.apply(MainActivity.this).print("测试写入文件日志");
-
-
-                startActivity(new Intent(MainActivity.this, LogActivity.class));
+                AppLog.apply(LogActivity.this).print("测试二");
             }
         });
     }
@@ -39,7 +33,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppLog.i("界面销毁i");
-        AppLog.print(1);
     }
 }
