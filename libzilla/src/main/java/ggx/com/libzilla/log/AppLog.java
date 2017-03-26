@@ -1,6 +1,5 @@
 package ggx.com.libzilla.log;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
@@ -13,7 +12,6 @@ public class AppLog {
 
     private static AbsLog log;
     private static FileLog fileLog;
-    public static CrashHandler handler;
 
     private AppLog(){}
     static {
@@ -32,13 +30,6 @@ public class AppLog {
 
     public static FileLog getfileLog() {
         return fileLog;
-    }
-
-    private static void checkLog(){
-        if(log==null){
-            log=new AbsLog();
-            System.out.println();
-        }
     }
 
     public static void print(Object o){
@@ -119,9 +110,4 @@ public class AppLog {
     }
 
     //******************华丽的分割线************************
-
-    //**********************下面注册程序异常处理******************************
-    public static void registCrashHandler(Context context){
-        CrashHandler.getInstance().init(context);
-    }
 }

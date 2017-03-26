@@ -13,7 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class FileLog implements ILog{
 
-    private static final int REQUEST_CODE=0x10;
+    private static final int REQUEST_CODE=0x2222;
     private ILog log;
     private String str;
     private Throwable throwable;
@@ -57,7 +57,7 @@ public class FileLog implements ILog{
     private static String buildMessage(String log){
         StackTraceElement caller = new Throwable().fillInStackTrace()
                 .getStackTrace()[2];
-        StringBuilder builder=new StringBuilder();
+        StringBuffer builder=new StringBuffer();
         builder.append(caller.toString());
         builder.append(System.getProperty("line.separator"));
         builder.append(log);
