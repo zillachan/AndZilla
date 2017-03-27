@@ -1,4 +1,4 @@
-package ggx.com.libzilla.log;
+package ggx.com.libzilla.core.log;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;

@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.zilla.andzilla.R;
 
-import ggx.com.libzilla.log.AppLog;
+import ggx.com.libzilla.core.log.AppLog;
 
 
 public class LogActivity extends AppCompatActivity {

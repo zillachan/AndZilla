@@ -3,7 +3,7 @@
  * Date:2016-03-31
  */
 
-package ggx.com.libzilla.log;
+package ggx.com.libzilla.core.log;
 
 /**
  * Created by jerry.guan on 3/15/2016.
@@ -16,14 +16,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;

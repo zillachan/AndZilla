@@ -1,4 +1,4 @@
-package ggx.com.libzilla.log;
+package ggx.com.libzilla.core.log;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

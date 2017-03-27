@@ -1,4 +1,4 @@
-package ggx.com.libzilla.permission;
+package ggx.com.libzilla.core.permission;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface PermissionFail {
 
-
+    int id();
 }
