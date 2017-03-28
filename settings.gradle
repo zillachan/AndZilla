@@ -1,1 +1,1 @@
-include ':app', ':libzilla'
+include ':app', ':libzilla', ':ioc-compiler', ':ioc-api', ':ioc-annotation'

@@ -2,20 +2,22 @@ package com.zilla.andzilla;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
+
+import com.ggx.andzilla.annotation.BindView;
 
 import ggx.com.libzilla.core.log.AppLog;
 import ggx.com.libzilla.core.log.CrashHandler;
-import ggx.com.libzilla.core.permission.EasyPermission;
 import ggx.com.libzilla.core.permission.MPermission;
 import ggx.com.libzilla.core.permission.PermissionFail;
 import ggx.com.libzilla.core.permission.PermissionOK;
 
 public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.btn)
+    TextView tv;
 
     CrashHandler crash;
     MPermission permission;
@@ -24,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         crash=CrashHandler.regist(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         permission=MPermission.with(this);
 
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
