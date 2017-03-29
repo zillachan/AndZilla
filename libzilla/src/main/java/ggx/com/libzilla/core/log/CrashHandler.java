@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -81,32 +82,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        if (!handleException(ex) && mDefaultHandler != null) {
-            //如果用户没有处理则让系统默认的异常处理器来处理
-            mDefaultHandler.uncaughtException(thread, ex);
-        }
-        //退出程序
-        try {
-            Thread.sleep(60000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
-    }
-
-    private Throwable tr;
-
-    /**
-     * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.
-     *
-     * @param ex
-     * @return true:如果处理了该异常信息;否则返回false.
-     */
-    private boolean handleException(Throwable ex) {
-        if (ex == null) {
-            return false;
-        }
+//        if (ex==null){
+//            return;
+//        }
         ex.printStackTrace();
         //收集设备参数信息
         collectDeviceInfo(context);
@@ -122,14 +100,25 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 saveCatchInfo2File(ex);
             }
         }
-        return true;
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Process.killProcess(Process.myPid());
+//        mDefaultHandler.uncaughtException(thread,ex);
+//        System.exit(1);
+
     }
+
+    private Throwable tr;
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode==2221){
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 saveCatchInfo2File(tr);
+
             }
         }
     }
@@ -192,6 +181,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         printWriter.close();
         String result = writer.toString();
         sb.append(result);
+
         FileOutputStream fos = null;
         try {
             long timestamp = System.currentTimeMillis();
@@ -202,8 +192,10 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                fos= new FileOutputStream(new File(dir,fileName));
+                File file=new File(dir,fileName);
+                fos= new FileOutputStream(file);
                 fos.write(sb.toString().getBytes());
+                Log.i("dsaa","写入成功"+file.getAbsolutePath());
             }
             return fileName;
         } catch (Exception e) {

@@ -6,6 +6,17 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-3.2" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/ioc-annotation" />
+            <option value="$PROJECT_DIR$/ioc-api" />
+            <option value="$PROJECT_DIR$/ioc-compiler" />
+            <option value="$PROJECT_DIR$/libzilla" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
