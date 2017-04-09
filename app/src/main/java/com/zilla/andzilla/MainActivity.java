@@ -1,11 +1,12 @@
 package com.zilla.andzilla;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ggx.andzilla.annotation.BindView;
@@ -16,9 +17,8 @@ import ggx.com.libzilla.core.log.CrashHandler;
 import ggx.com.libzilla.core.permission.MPermission;
 import ggx.com.libzilla.core.permission.PermissionFail;
 import ggx.com.libzilla.core.permission.PermissionOK;
-import ggx.com.libzilla.design.lifecycle.ProxyClass;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     @BindView(R.id.btn)
     TextView tv;
 
@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
                 AppLog.print("测试普通日志"+new Object());
                 AppLog.apply(MainActivity.this).print("测试写入文件日志");
                 //permission.apply(100, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
-
-                startActivity(new Intent(MainActivity.this, ProxyClass.proxy(LogActivity.class)));
+                startActivity(new Intent(MainActivity.this, LogActivity.class));
             }
         });
+
     }
 
     @Override

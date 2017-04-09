@@ -1,12 +1,14 @@
 package ggx.com.libzilla.design.lifecycle;
 
+import android.os.Bundle;
+
 /**
  * Created by jerry.guan on 3/27/2017.
  */
 
 public interface IActivityLifeCycle {
 
-    void onCreated();
+    void onCreate(Bundle savedInstanceState);
 
     void onStart();
 
