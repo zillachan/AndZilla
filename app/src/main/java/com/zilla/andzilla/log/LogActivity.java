@@ -3,14 +3,21 @@ package com.zilla.andzilla.log;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
 import com.ggx.andzilla.annotation.BindView;
 import com.zilla.andzilla.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ggx.com.libzilla.core.log.AppLog;
 import ggx.com.libzilla.design.lifecycle.IActivityLifeCycle;
+import ggx.com.libzilla.util.MutilRecycleAdapter;
 
 
 public class LogActivity extends AppCompatActivity{
@@ -18,6 +25,10 @@ public class LogActivity extends AppCompatActivity{
     @BindView(R.id.btn)
     Button btn;
 
+    RecyclerView list;
+
+    List<Person> items;
+    MutilRecycleAdapter<Person> adapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +39,28 @@ public class LogActivity extends AppCompatActivity{
                 AppLog.apply(LogActivity.this).print("测试二");
             }
         });
+        list= (RecyclerView) findViewById(R.id.list);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        items=new ArrayList<>();
+        for (int i=0;i<10;i++){
+            items.add(new Person("item"+i));
+        }
+        adapter=new MutilRecycleAdapter<>(items);
+        adapter.setOnItemClickListener(new MutilRecycleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                AppLog.print(position+"项被点击了");
+            }
+        });
+        adapter.setOnItemLongClickListener(new MutilRecycleAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(int position) {
+                AppLog.print(position+"项被长按了");
+            }
+        });
+        adapter.addVisitor(0,new Normal());
+        list.setAdapter(adapter);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package ggx.com.libzilla.util;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -8,53 +7,52 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author jerry.Guan
  *         created by 2017/4/9
  */
 
-public class MutilRecycleAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>{
+public class MutilRecycleAdapter<T extends ItemModel> extends RecyclerView.Adapter<BaseViewHolder>{
 
-    private Context mContext;
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
-    SparseArray<Visitor> visitorSparseArray;
-    List<T> datas;
+    private SparseArray<Visitor> visitorSparseArray;
+    private List<T> models;
 
-    public MutilRecycleAdapter(Context context,List<T> datas) {
-        this.mContext = context;
-        this.datas=datas;
+    public MutilRecycleAdapter(List<T> models) {
+        this.models=models;
         visitorSparseArray=new SparseArray<>();
     }
 
-    public void addVisitor(Visitor visitor){
-        visitorSparseArray.put(visitor.getViewLayout(),visitor);
+    public void addVisitor(int type,Visitor visitor){
+        visitorSparseArray.put(type,visitor);
     }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView=LayoutInflater.from(mContext).inflate(viewType,parent,false);
-        BaseViewHolder holder=new BaseViewHolder(itemView);
+        Visitor visitor=visitorSparseArray.get(viewType);
+        View itemView=LayoutInflater.from(parent.getContext()).inflate(visitor.getViewLayout(),parent,false);
+        BaseViewHolder holder=visitor.createViewHolder(itemView);
         holder.setViewType(viewType);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        visitorSparseArray.get(holder.getViewType())
-                .setLogic(holder,position);
+        holder.setOnItemClickListener(onItemClickListener,position);
+        holder.setOnItemLongClickListener(onItemLongClickListener,position);
+        holder.setLogic(holder,models.get(position),position,holder.getViewType());
     }
 
     @Override
     public int getItemViewType(int position) {
-        return 0;
+        return models.get(position).getItemType();
     }
 
     @Override
     public int getItemCount() {
-        return datas==null?0:datas.size();
+        return models==null?0:models.size();
     }
 
     public OnItemClickListener getOnItemClickListener() {
@@ -74,10 +72,10 @@ public class MutilRecycleAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     public interface OnItemClickListener{
-        void onItemClick();
+        void onItemClick(int position);
     }
 
     public interface OnItemLongClickListener{
-        void onItemLongClick();
+        void onItemLongClick(int position);
     }
 }

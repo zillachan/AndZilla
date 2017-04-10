@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 public  interface Visitor {
 
-    //访问者需要访问的holder
-    void setLogic(BaseViewHolder holder,int position);
+    //创建需要访问的ViewHodler
+    BaseViewHolder createViewHolder(View itemView);
     //访问者需要提供的布局
     int getViewLayout();
 }

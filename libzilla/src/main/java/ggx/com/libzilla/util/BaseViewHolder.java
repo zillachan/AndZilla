@@ -9,7 +9,7 @@ import android.view.View;
  *         created by 2017/4/9
  */
 
-public class BaseViewHolder extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder<M extends ItemModel> extends RecyclerView.ViewHolder {
 
     private SparseArray<View> views;
     private int viewType;
@@ -25,7 +25,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
             views.put(resID,view);
         }
 
-        return (T)view;
+        return (T) view;
     }
 
     public int getViewType() {
@@ -35,4 +35,31 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public void setViewType(int viewType) {
         this.viewType = viewType;
     }
+
+    public void setOnItemClickListener(final MutilRecycleAdapter.OnItemClickListener listener, final int position){
+        super.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener!=null){
+                    listener.onItemClick(position);
+                }
+            }
+        });
+    }
+    public void setOnItemLongClickListener(final MutilRecycleAdapter.OnItemLongClickListener listener, final int position){
+        if(!super.itemView.isLongClickable()){
+            super.itemView.setLongClickable(true);
+        }
+        super.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(listener!=null){
+                    listener.onItemLongClick(position);
+                }
+                return false;
+            }
+        });
+    }
+
+    public abstract void setLogic(BaseViewHolder holder,M model, int position,int itemType);
 }

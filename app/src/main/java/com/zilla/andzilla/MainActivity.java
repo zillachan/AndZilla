@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(new Intent(MainActivity.this, LogActivity.class));
             }
         });
-
     }
 
     @Override
