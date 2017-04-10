@@ -40,8 +40,12 @@ public class MutilRecycleAdapter<T extends ItemModel> extends RecyclerView.Adapt
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.setOnItemClickListener(onItemClickListener,position);
-        holder.setOnItemLongClickListener(onItemLongClickListener,position);
+        if (onItemClickListener!=null){
+            holder.setOnItemClickListener(onItemClickListener,position);
+        }
+        if(onItemLongClickListener!=null){
+            holder.setOnItemLongClickListener(onItemLongClickListener,position);
+        }
         holder.setLogic(holder,models.get(position),position,holder.getViewType());
     }
 
