@@ -27,14 +27,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         permission=MPermission.with(this);
-        String s=null;
-        s.equals("dsa");
+//        String s=null;
+//        s.equals("dsa");
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppLog.print("测试普通日志"+new Object());
-                AppLog.apply(MainActivity.this).print("测试写入文件日志");
-                permission.apply(100, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+//                AppLog.apply(MainActivity.this).print("测试写入文件日志");
+                permission.apply(100, Manifest.permission.BLUETOOTH,
+                        Manifest.permission.BLUETOOTH_ADMIN
+                );
 
 //                startActivity(new Intent(MainActivity.this, LogActivity.class));
             }
