@@ -39,8 +39,6 @@ public class LogActivity extends AppCompatActivity{
             }
         });
         list= (RecyclerView) findViewById(R.id.list);
-//        list.setLayoutManager(new GridLayoutManager(this,2));
-//        list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         list.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.HORIZONTAL));
         items=new ArrayList<>();
         for (int i=0;i<50;i++){

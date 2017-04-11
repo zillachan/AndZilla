@@ -18,6 +18,11 @@ public class Special implements Visitor{
     public BaseViewHolder createViewHolder(View itemView) {
         return new BaseViewHolder<Person>(itemView) {
             @Override
+            public void initView(View itemView) {
+
+            }
+
+            @Override
             public void setLogic(Person model, int position, int itemType) {
 //                TextView tv= (TextView) holder.getView(R.id.t1);
 //                tv.setText(model.name);

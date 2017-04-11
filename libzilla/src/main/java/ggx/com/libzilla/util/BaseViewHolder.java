@@ -11,21 +11,10 @@ import android.view.View;
 
 public abstract class BaseViewHolder<M extends ItemModel> extends RecyclerView.ViewHolder {
 
-    private SparseArray<View> views;
     private int viewType;
     public BaseViewHolder(View itemView) {
         super(itemView);
-        views=new SparseArray<>();
-    }
-    public <T extends View>T getView(int resID) {
-        View view = views.get(resID);
-
-        if (view == null) {
-            view = super.itemView.findViewById(resID);
-            views.put(resID,view);
-        }
-
-        return (T) view;
+        initView(itemView);
     }
 
     public int getViewType() {
@@ -60,6 +49,8 @@ public abstract class BaseViewHolder<M extends ItemModel> extends RecyclerView.V
             }
         });
     }
+
+    public abstract void initView(View itemView);
 
     public abstract void setLogic(M model, int position,int itemType);
 }

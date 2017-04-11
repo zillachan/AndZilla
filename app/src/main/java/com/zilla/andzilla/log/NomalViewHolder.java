@@ -18,4 +18,9 @@ public class NomalViewHolder extends BaseViewHolder<Person>{
     @Override
     public void setLogic( Person model, int position, int itemType) {
     }
+
+    @Override
+    public void initView(View itemView) {
+
+    }
 }

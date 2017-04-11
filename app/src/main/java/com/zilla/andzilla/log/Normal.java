@@ -17,10 +17,15 @@ public class Normal implements Visitor{
     @Override
     public BaseViewHolder createViewHolder(View itemView) {
         return new BaseViewHolder<Person>(itemView) {
+            TextView tv;
             @Override
             public void setLogic( Person model, int position, int itemType) {
-//                TextView tv= (TextView) holder.getView(R.id.t1);
-//                tv.setText(model.name);
+                tv.setText(model.name);
+            }
+
+            @Override
+            public void initView(View itemView) {
+                tv= (TextView) itemView.findViewById(R.id.t1);
             }
         };
     }
