@@ -10,13 +10,15 @@ import ggx.com.libzilla.util.ItemModel;
 public class Person implements ItemModel{
 
     public String name;
+    public int flag;
 
-    public Person(String name) {
+    public Person(int flag,String name) {
+        this.flag=flag;
         this.name = name;
     }
 
     @Override
     public int getItemType() {
-        return 0;
+        return flag;
     }
 }

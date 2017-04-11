@@ -32,8 +32,11 @@ public class MutilRecycleAdapter<T extends ItemModel> extends RecyclerView.Adapt
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Visitor visitor=visitorSparseArray.get(viewType);
+        if(visitor==null){
+            //需要处理null的情况
+        }
         View itemView=LayoutInflater.from(parent.getContext()).inflate(visitor.getViewLayout(),parent,false);
-        BaseViewHolder holder=visitor.createViewHolder(itemView);
+        BaseViewHolder<T> holder=visitor.createViewHolder(itemView);
         holder.setViewType(viewType);
         return holder;
     }
@@ -46,7 +49,7 @@ public class MutilRecycleAdapter<T extends ItemModel> extends RecyclerView.Adapt
         if(onItemLongClickListener!=null){
             holder.setOnItemLongClickListener(onItemLongClickListener,position);
         }
-        holder.setLogic(holder,models.get(position),position,holder.getViewType());
+        holder.setLogic(models.get(position),position,holder.getViewType());
     }
 
     @Override

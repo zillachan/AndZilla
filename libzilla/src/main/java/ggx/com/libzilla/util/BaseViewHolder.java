@@ -61,5 +61,5 @@ public abstract class BaseViewHolder<M extends ItemModel> extends RecyclerView.V
         });
     }
 
-    public abstract void setLogic(BaseViewHolder holder,M model, int position,int itemType);
+    public abstract void setLogic(M model, int position,int itemType);
 }

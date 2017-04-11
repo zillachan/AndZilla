@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ggx.com.libzilla.core.log.AppLog;
-import ggx.com.libzilla.design.lifecycle.IActivityLifeCycle;
 import ggx.com.libzilla.util.MutilRecycleAdapter;
 
 
@@ -40,11 +39,18 @@ public class LogActivity extends AppCompatActivity{
             }
         });
         list= (RecyclerView) findViewById(R.id.list);
-        list.setLayoutManager(new LinearLayoutManager(this));
-        list.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+//        list.setLayoutManager(new GridLayoutManager(this,2));
+//        list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        list.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.HORIZONTAL));
         items=new ArrayList<>();
-        for (int i=0;i<10;i++){
-            items.add(new Person("item"+i));
+        for (int i=0;i<50;i++){
+            if(i==2){
+                items.add(new Person(0,"item"+i));
+            }else if(i==4){
+                items.add(new Person(2,"item"+i));
+            }else {
+                items.add(new Person(1,"item"+i));
+            }
         }
         adapter=new MutilRecycleAdapter<>(items);
         adapter.setOnItemClickListener(new MutilRecycleAdapter.OnItemClickListener() {
@@ -60,6 +66,7 @@ public class LogActivity extends AppCompatActivity{
             }
         });
         adapter.addVisitor(0,new Normal());
+        adapter.addVisitor(1,new Special());
         list.setAdapter(adapter);
     }
 

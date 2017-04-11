@@ -13,12 +13,12 @@ import ggx.com.libzilla.util.Visitor;
  *         created by 2017/4/10
  */
 
-public class Normal implements Visitor{
+public class Special implements Visitor{
     @Override
     public BaseViewHolder createViewHolder(View itemView) {
         return new BaseViewHolder<Person>(itemView) {
             @Override
-            public void setLogic( Person model, int position, int itemType) {
+            public void setLogic(Person model, int position, int itemType) {
 //                TextView tv= (TextView) holder.getView(R.id.t1);
 //                tv.setText(model.name);
             }
@@ -27,6 +27,6 @@ public class Normal implements Visitor{
 
     @Override
     public int getViewLayout() {
-        return R.layout.normal_item;
+        return R.layout.special_item;
     }
 }
