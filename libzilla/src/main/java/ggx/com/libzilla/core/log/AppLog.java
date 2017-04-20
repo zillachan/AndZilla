@@ -35,36 +35,70 @@ public class AppLog {
     public static void print(Object o){
         log.i(buildMessage(String.valueOf(o)));
     }
-    private static void print(double x){
+    public static void print(double x){
         log.i(buildMessage(String.valueOf(x)));
     }
-    private static void print(int x){
+    public static void print(int x){
         log.i(buildMessage(String.valueOf(x)));
     }
-    private static void print(boolean x){
+    public static void print(boolean x){
         log.i(buildMessage(String.valueOf(x)));
     }
-    private static void print(char x){
+    public static void print(char x){
         log.i(buildMessage(String.valueOf(x)));
     }
-    private static void print(short x){
+    public static void print(short x){
         log.i(buildMessage(String.valueOf(x)));
     }
-    private static void print(float x){
+    public static void print(float x){
         log.i(buildMessage(String.valueOf(x)));
     }
-    private static void print(long x){
+    public static void print(long x){
         log.i(buildMessage(String.valueOf(x)));
     }
-    private static void print(char[] x){
+    public static void print(char[] x){
         log.i(buildMessage(String.valueOf(x)));
+    }
+
+    public static void print(Object ...obj){
+        StringBuilder sb=new StringBuilder();
+        for (Object o:obj){
+            sb.append(String.valueOf(o));
+        }
+        log.i(buildMessage(sb.toString()));
+    }
+    public static void i(Object...obj){
+        StringBuilder sb=new StringBuilder();
+        for (Object o:obj){
+            sb.append(String.valueOf(o));
+        }
+        log.i(buildMessage(sb.toString()));
+    }
+    public static void e(Object...obj){
+        StringBuilder sb=new StringBuilder();
+        for (Object o:obj){
+            sb.append(String.valueOf(o));
+        }
+        log.e(buildMessage(sb.toString()));
+    }
+    public static void w(Object...obj){
+        StringBuilder sb=new StringBuilder();
+        for (Object o:obj){
+            sb.append(String.valueOf(o));
+        }
+        log.e(buildMessage(sb.toString()));
+    }
+    public static void d(Object...obj){
+        StringBuilder sb=new StringBuilder();
+        for (Object o:obj){
+            sb.append(String.valueOf(o));
+        }
+        log.e(buildMessage(sb.toString()));
     }
 
     public static void i(String str){
         log.i(buildMessage(str));
-
     }
-
     public static void w(String str){
         log.w(buildMessage(str));
     }
