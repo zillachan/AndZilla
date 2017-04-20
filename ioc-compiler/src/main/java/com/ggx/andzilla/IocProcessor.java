@@ -3,8 +3,12 @@ package com.ggx.andzilla;
 import com.ggx.andzilla.annotation.BindView;
 import com.google.auto.service.AutoService;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -25,9 +29,11 @@ import javax.lang.model.util.Elements;
 @AutoService(Processor.class)
 public class IocProcessor extends AbstractProcessor{
 
-    private Filer mFileUtils;
-    private Elements mElementUtils;
-    private Messager mMessager;
+    private Filer mFileUtils;//文件相关辅助类
+    private Elements mElementUtils;//元素相关辅助类
+    private Messager mMessager;//日志相关辅助类
+
+    private Map<String, AnnotationClass> mAnnotatedClassMap;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
@@ -35,6 +41,7 @@ public class IocProcessor extends AbstractProcessor{
         mFileUtils=processingEnvironment.getFiler();
         mElementUtils=processingEnvironment.getElementUtils();
         mMessager=processingEnvironment.getMessager();
+        mAnnotatedClassMap=new TreeMap<>();
     }
 
     //add support annotations
@@ -53,15 +60,40 @@ public class IocProcessor extends AbstractProcessor{
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        Set<? extends Element> elements=roundEnvironment.getElementsAnnotatedWith(BindView.class);
-        for (Element element:elements){
-            //field type
-            VariableElement variableElement= (VariableElement) element;
-            //class type
-            TypeElement typeElement= (TypeElement) variableElement.getEnclosingElement();
-            String qualifiedName=typeElement.getQualifiedName().toString();
-            System.out.println("qualifiedName#######################################="+qualifiedName);
+        mAnnotatedClassMap.clear();
+        processBindView(roundEnvironment);
+        //循环所有创建好的AnnotationClass对象然后创建文件
+        for(AnnotationClass annotationClass:mAnnotatedClassMap.values()){
+            try {
+                annotationClass.generateFile().writeTo(System.out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return true;
+    }
+
+    //do process BindView annotation
+    private void processBindView(RoundEnvironment roundEnvironment){
+        Set<? extends Element> elements=roundEnvironment.getElementsAnnotatedWith(BindView.class);
+        for (Element element:elements){
+            AnnotationClass annotationClass=getAnnotationClass(element);
+            //创建此注解标注的所有字段对象
+            BindViewField bindViewField=new BindViewField(element);
+            annotationClass.addField(bindViewField);
+        }
+
+    }
+
+    private AnnotationClass getAnnotationClass(Element element){
+        //获取所在的类元素（TypeElement）
+        TypeElement typeElement= (TypeElement) element.getEnclosingElement();
+        String fullName=typeElement.getQualifiedName().toString();
+        AnnotationClass annotationClass=mAnnotatedClassMap.get(fullName);
+        if(annotationClass==null){
+            annotationClass=new AnnotationClass(typeElement,mElementUtils);
+            mAnnotatedClassMap.put(fullName,annotationClass);
+        }
+        return annotationClass;
     }
 }

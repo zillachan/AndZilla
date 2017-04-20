@@ -2,17 +2,20 @@ package com.zilla.andzilla;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ggx.andzilla.annotation.BindView;
 import com.zilla.andzilla.log.LogActivity;
 
+import ggx.com.ioc_api.GBinder;
 import ggx.com.libzilla.core.log.AppLog;
 import ggx.com.libzilla.core.log.CrashHandler;
 import ggx.com.libzilla.core.permission.MPermission;
@@ -21,7 +24,11 @@ import ggx.com.libzilla.core.permission.PermissionOK;
 
 public class MainActivity extends AppCompatActivity{
     @BindView(R.id.btn)
-    TextView tv;
+    Button tv;
+    @BindView(R.id.btn1)
+    Button tv1;
+    @BindView(R.id.btn2)
+    Button tv2;
 
     CrashHandler crash;
     MPermission permission;
@@ -31,7 +38,8 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         permission=MPermission.with(this);
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        GBinder.bind(this);
+        tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppLog.print("测试普通日志"+new Object());
