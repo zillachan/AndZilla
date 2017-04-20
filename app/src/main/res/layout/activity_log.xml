@@ -1,21 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:text="点我界面二"
-        />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <FrameLayout
+        android:id="@+id/fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_send"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="6dp"
+        android:background="#e1e1e1"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="发送"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:background="#00ff00"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:enabled="false"
+            android:layout_alignParentRight="true"/>
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_toLeftOf="@id/btn_send"
+            android:layout_marginRight="10dp" />
+    </RelativeLayout>
+
+</RelativeLayout>
