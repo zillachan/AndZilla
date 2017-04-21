@@ -12,8 +12,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.ggx.andzilla.annotation.AuthorityFail;
+import com.ggx.andzilla.annotation.AuthorityOK;
 import com.ggx.andzilla.annotation.BindView;
 import com.zilla.andzilla.log.LogActivity;
+import com.zilla.andzilla.log.Person;
 
 import ggx.com.ioc_api.GBinder;
 import ggx.com.libzilla.core.log.AppLog;
@@ -57,16 +60,16 @@ public class MainActivity extends AppCompatActivity{
         crash.onRequestPermissionsResult(requestCode,permissions,grantResults);
         permission.onRequestPermissionsResult(this,requestCode,permissions,grantResults);
     }
-    @PermissionFail(id = 100)
-    private void permissionFail(){
+    @AuthorityOK(100)
+    private void permissionFail(int i){
         AppLog.print("权限失败");
     }
 
-    @PermissionOK(id = 100)
+    @AuthorityOK( 100)
     private void permissionOK(){
         AppLog.print("权限成功");
     }
-    @PermissionFail(id = 101)
+    @AuthorityFail(101)
     private void permissionFail1(){
         AppLog.print("权限失败了dsadsadas");
     }
