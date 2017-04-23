@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.ggx.andzilla.annotation.AuthorityFail;
 import com.ggx.andzilla.annotation.AuthorityOK;
+import com.squareup.leakcanary.RefWatcher;
 
 import ggx.com.libzilla.core.log.AppLog;
 import ggx.com.libzilla.core.log.CrashHandler;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
         crash=CrashHandler.regist(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         permission=MPermission.with(this);
 //        GBinder.bind(this);
 
@@ -86,5 +88,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onDestroy() {
         permission.recycle();
         super.onDestroy();
+        RefWatcher refWatcher = AndZillaApplication.getRefWatcher(this);
+        refWatcher.watch(this);
     }
 }
