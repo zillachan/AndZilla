@@ -1,23 +1,20 @@
 package ggx.com.libzilla.core.permission;
 
-import android.util.SparseArray;
-
 /**
  * Created by jerry.guan on 4/21/2017.
  */
 
 public class PermissionInject {
 
-    private SparseArray<MethodCallback> methodCallbacks=new SparseArray<>();
+    private MethodCallback callback;
 
-    public void callMethod(Object obj,int requestCode){
+
+    public  void callMethod(Object obj, int requestCode, boolean isSuccess){
         String fullName=obj.getClass().getName();
-        MethodCallback callback=methodCallbacks.get(requestCode);
         if(callback==null){
             try {
                 Class<?> clazz=Class.forName(fullName+"$$Authority");
                 callback= (MethodCallback) clazz.newInstance();
-                methodCallbacks.put(requestCode,callback);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
@@ -27,8 +24,12 @@ public class PermissionInject {
             }
         }
         if(callback!=null){
-            callback.invoke(obj,requestCode);
+            if(isSuccess)
+                callback.invoke(obj,requestCode);
+            else
+                callback.invokeFail(obj,requestCode);
         }
     }
+
 
 }

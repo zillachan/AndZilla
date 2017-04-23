@@ -10,12 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 动态权限申请类
@@ -29,8 +25,7 @@ public class MPermission {
     private WeakReference<Fragment> fragmentWeakReference;
     private Context context;
     private boolean isActivity;
-    private Map<Integer,Method> okMap;
-    private Map<Integer,Method> failMap;
+    private PermissionInject inject;
 
     private int requestCode;
 
@@ -38,37 +33,13 @@ public class MPermission {
         isActivity=true;
         activityWeakReference=new WeakReference<>(activity);
         context=activity.getApplicationContext();
-        okMap=new HashMap<>();
-        failMap=new HashMap<>();
-        findMethod(activity);
+        inject=new PermissionInject();
     }
     private MPermission(Fragment fragment){
         isActivity=false;
         fragmentWeakReference=new WeakReference<>(fragment);
         context=fragment.getActivity().getApplicationContext();
-        okMap=new HashMap<>();
-        failMap=new HashMap<>();
-        findMethod(fragment);
-    }
-
-
-    private void findMethod(Object o) {
-        Method[] methods = o.getClass().getDeclaredMethods();
-        for (Method method : methods) {
-            if (method.isAnnotationPresent(PermissionOK.class)) {
-                PermissionOK ok=method.getAnnotation(PermissionOK.class);
-                Integer id=Integer.valueOf(ok.id());
-                if(!okMap.containsKey(id)){
-                    okMap.put(id,method);
-                }
-            }else if(method.isAnnotationPresent(PermissionFail.class)){
-                PermissionFail fail=method.getAnnotation(PermissionFail.class);
-                Integer id=Integer.valueOf(fail.id());
-                if(!failMap.containsKey(id)){
-                    failMap.put(id,method);
-                }
-            }
-        }
+        inject=new PermissionInject();
     }
 
     public static MPermission with(AppCompatActivity activity) {
@@ -105,22 +76,7 @@ public class MPermission {
             }
         } else {
             //权限被允许
-            Method method=okMap.get(Integer.valueOf(requestCode));
-            invoke(isActivity?activityWeakReference.get():fragmentWeakReference.get(),method);
-        }
-    }
-
-    private void invoke(Object o,Method method){
-        if(method==null){
-            return;
-        }
-        method.setAccessible(true);
-        try {
-            method.invoke(o,new Object[]{});
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            inject.callMethod(activityWeakReference.get(),requestCode,true);
         }
     }
 
@@ -128,17 +84,24 @@ public class MPermission {
     @TargetApi(Build.VERSION_CODES.M)
     private void requestPermissionApi23(String[] permissions){
         if(isActivity){
-            activityWeakReference.get().requestPermissions(permissions,requestCode);
+            if(activityWeakReference!=null&&activityWeakReference.get()!=null){
+                activityWeakReference.get().requestPermissions(permissions,requestCode);
+            }
         }else{
-            fragmentWeakReference.get().requestPermissions(permissions,requestCode);
+            if(fragmentWeakReference!=null&&fragmentWeakReference.get()!=null){
+                fragmentWeakReference.get().requestPermissions(permissions,requestCode);
+            }
         }
     }
     private void requestPermissionApi(int[] grantResults,String[] permissions){
-
         if(isActivity){
-            activityWeakReference.get().onRequestPermissionsResult(requestCode,permissions,grantResults);
+            if(activityWeakReference!=null&&activityWeakReference.get()!=null){
+                activityWeakReference.get().onRequestPermissionsResult(requestCode,permissions,grantResults);
+            }
         }else{
-            fragmentWeakReference.get().onRequestPermissionsResult(requestCode,permissions,grantResults);
+            if(fragmentWeakReference!=null&&fragmentWeakReference.get()!=null){
+                fragmentWeakReference.get().onRequestPermissionsResult(requestCode,permissions,grantResults);
+            }
         }
     }
     private List<String> noPermission=new ArrayList<>();
@@ -159,17 +122,14 @@ public class MPermission {
             if (grantResults.length == permissions.length) {
                 for (int grant : grantResults) {
                     if (grant != PackageManager.PERMISSION_GRANTED) {
-                        Method fail=failMap.get(Integer.valueOf(requestCode));
-                        invoke(o,fail);
+                        inject.callMethod(o,requestCode,false);
                         return;
                     }
                 }
                 //权限都允许了,初始化相机
-                Method ok=okMap.get(Integer.valueOf(requestCode));
-                invoke(o,ok);
+                inject.callMethod(o,requestCode,true);
             } else {
-                Method fail=failMap.get(Integer.valueOf(requestCode));
-                invoke(o,fail);
+                inject.callMethod(o,requestCode,false);
             }
         }
     }
@@ -183,5 +143,6 @@ public class MPermission {
             fragmentWeakReference.clear();
             fragmentWeakReference=null;
         }
+        inject=null;
     }
 }
