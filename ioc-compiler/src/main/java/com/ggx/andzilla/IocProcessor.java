@@ -62,14 +62,14 @@ public class IocProcessor extends AbstractProcessor{
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         mAnnotatedClassMap.clear();
         processBindView(roundEnvironment);
-        //循环所有创建好的AnnotationClass对象然后创建文件
-        for(AnnotationClass annotationClass:mAnnotatedClassMap.values()){
-            try {
-                annotationClass.generateFile().writeTo(System.out);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        //循环所有创建好的AnnotationClass对象然后创建文件
+//        for(AnnotationClass annotationClass:mAnnotatedClassMap.values()){
+//            try {
+//                annotationClass.generateFile().writeTo(System.out);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         return true;
     }
 

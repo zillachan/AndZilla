@@ -6,5 +6,6 @@ package ggx.com.libzilla.core.permission;
 
 public interface MethodCallback<T> {
 
-    void invoke(T source);
+    void invoke(T source,int requestCode);
+    void invokeFail(T source,int requesCode);
 }

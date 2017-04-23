@@ -2,28 +2,20 @@ package com.zilla.andzilla;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.ggx.andzilla.annotation.AuthorityFail;
 import com.ggx.andzilla.annotation.AuthorityOK;
 import com.ggx.andzilla.annotation.BindView;
 import com.zilla.andzilla.log.LogActivity;
-import com.zilla.andzilla.log.Person;
 
 import ggx.com.ioc_api.GBinder;
 import ggx.com.libzilla.core.log.AppLog;
 import ggx.com.libzilla.core.log.CrashHandler;
 import ggx.com.libzilla.core.permission.MPermission;
-import ggx.com.libzilla.core.permission.PermissionFail;
-import ggx.com.libzilla.core.permission.PermissionOK;
 
 public class MainActivity extends AppCompatActivity{
     @BindView(R.id.btn)
@@ -61,16 +53,16 @@ public class MainActivity extends AppCompatActivity{
         permission.onRequestPermissionsResult(this,requestCode,permissions,grantResults);
     }
     @AuthorityOK(100)
-    private void permissionFail(int i){
+    public void permissionFail(){
         AppLog.print("权限失败");
     }
 
     @AuthorityOK( 100)
-    private void permissionOK(){
+    public void permissionOK(){
         AppLog.print("权限成功");
     }
     @AuthorityFail(101)
-    private void permissionFail1(){
+    public void permissionFail1(){
         AppLog.print("权限失败了dsadsadas");
     }
 

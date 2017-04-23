@@ -15,7 +15,7 @@ public class PermissionInject {
         MethodCallback callback=methodCallbacks.get(requestCode);
         if(callback==null){
             try {
-                Class<?> clazz=Class.forName(fullName+"$$"+requestCode);
+                Class<?> clazz=Class.forName(fullName+"$$Authority");
                 callback= (MethodCallback) clazz.newInstance();
                 methodCallbacks.put(requestCode,callback);
             } catch (ClassNotFoundException e) {
@@ -27,7 +27,7 @@ public class PermissionInject {
             }
         }
         if(callback!=null){
-            callback.invoke(obj);
+            callback.invoke(obj,requestCode);
         }
     }
 
