@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 /**
  * Created by jerry.guan on 4/21/2017.
  */
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)
 public @interface AuthorityOK {
 
-    int value() default 10;
+    int value();
 }

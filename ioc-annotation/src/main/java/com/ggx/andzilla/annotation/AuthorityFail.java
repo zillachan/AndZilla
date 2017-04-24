@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Created by jerry.guan on 4/21/2017.
  */
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)
 public @interface AuthorityFail {
 
