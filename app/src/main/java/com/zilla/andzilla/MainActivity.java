@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         permission=MPermission.with(this);
-//        GBinder.bind(this);
 
        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
