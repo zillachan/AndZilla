@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface LifeCycle {
 
-    Class value();
+    Class<?>[] value();
 }
