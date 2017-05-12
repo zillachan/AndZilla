@@ -8,22 +8,25 @@ import android.view.View;
 
 import com.ggx.andzilla.annotation.AuthorityFail;
 import com.ggx.andzilla.annotation.AuthorityOK;
+import com.ggx.andzilla.annotation.Lifecycle;
 import com.squareup.leakcanary.RefWatcher;
 
 import ggx.com.libzilla.core.log.AppLog;
 import ggx.com.libzilla.core.log.CrashHandler;
 import ggx.com.libzilla.core.permission.MPermission;
 
+
+@Lifecycle(TestLifeCycle.class)
 public class MainActivity extends AppCompatActivity{
 
     CrashHandler crash;
     MPermission permission;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         crash=CrashHandler.regist(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         permission=MPermission.with(this);
 
        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
