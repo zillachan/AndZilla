@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.ggx.andzilla.annotation.Lifecycle;
 import com.zilla.andzilla.R;
+import com.zilla.andzilla.TestLifeCycle1;
 
 import ggx.com.libzilla.core.log.AppLog;
 
-
+@Lifecycle(TestLifeCycle1.class)
 public class LogActivity extends AppCompatActivity {
 
     RelativeLayout rl_send;

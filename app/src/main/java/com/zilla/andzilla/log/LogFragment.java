@@ -78,4 +78,8 @@ public class LogFragment extends Fragment {
         list.setAdapter(adapter);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 }

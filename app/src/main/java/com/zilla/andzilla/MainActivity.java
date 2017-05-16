@@ -1,6 +1,7 @@
 package com.zilla.andzilla;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import com.ggx.andzilla.annotation.AuthorityFail;
 import com.ggx.andzilla.annotation.AuthorityOK;
 import com.ggx.andzilla.annotation.Lifecycle;
 import com.squareup.leakcanary.RefWatcher;
+import com.zilla.andzilla.log.LogActivity;
 
 import ggx.com.libzilla.core.log.AppLog;
 import ggx.com.libzilla.core.log.CrashHandler;
@@ -32,10 +34,10 @@ public class MainActivity extends AppCompatActivity{
        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppLog.print("测试普通日志"+new Object());
+//                AppLog.print("测试普通日志"+new Object());
 //                AppLog.apply(MainActivity.this).print("测试写入文件日志");
-                permission.apply(100, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
-//                startActivity(new Intent(MainActivity.this, LogActivity.class));
+//                permission.apply(100, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA);
+                startActivity(new Intent(MainActivity.this, LogActivity.class));
             }
         });
     }

@@ -61,6 +61,7 @@ public class LifecycleProcessor extends AbstractProcessor{
         Set<? extends TypeElement> elements=ElementFilter.typesIn(roundEnvironment.getElementsAnnotatedWith(Lifecycle.class));
         //生成类文件
         TypeSpec.Builder lifecycleManage=TypeSpec.classBuilder("LifecycleManager")
+                .addModifiers(Modifier.PUBLIC)
                 .addSuperinterface(ClassName.get("ggx.com.libzilla.design.lifecycle","ILifecycleManager"));
 
         FieldSpec cycleMap=

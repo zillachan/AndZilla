@@ -8,6 +8,8 @@ import android.os.Bundle;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
+import ggx.com.libzilla.design.lifecycle.ActivityLifeCycle;
+
 /**
  * Created by jerry.guan on 3/28/2017.
  */
@@ -24,5 +26,6 @@ public class AndZillaApplication extends Application{
     public void onCreate() {
         super.onCreate();
         refWatcher= LeakCanary.install(this);
+        registerActivityLifecycleCallbacks(new ActivityLifeCycle());
     }
 }
